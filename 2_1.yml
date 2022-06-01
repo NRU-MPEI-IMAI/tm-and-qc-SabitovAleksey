@@ -1,0 +1,25 @@
+input: '001111222'
+blank: ' '
+start state: find_0
+table:
+  # scan to the rightmost digit
+  find_0:
+    0: {write: x, R: find_1}
+    x: R
+    [1, 2]: {R: regect}
+    ' ': {R: accept}
+  # then carry the 1
+  find_1:
+    [0, x]: R
+    1: {write: x, R: find_2}
+    [2, ' ']: {R: regect}
+  find_2:
+    [1, x]: R
+    2: {write: x, L: to_begin}
+    ' ': {R: regect}
+  to_begin:
+    [0, 1, 2, x]: L
+    ' ': {R: find_0}
+  accept:
+
+  regect:

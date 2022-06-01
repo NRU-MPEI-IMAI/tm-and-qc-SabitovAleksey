@@ -1,0 +1,36 @@
+input: 'abcABBC'
+blank: ' '
+start state: take_sem
+table:
+
+  take_sem:
+    a: {write: x, R: find_A}
+    b: {write: x, R: find_B}
+    c: {write: x, R: find_C}
+    [A, B, C]: {R: regect}
+    x: R
+    ' ': {R: accept}
+
+  find_A:
+    [ a, b, c, B, C]: R
+    A: {write: x, L: to_begin}
+    x: R
+    ' ': {R: regect}
+
+  find_B:
+    [ a, b, c, A, C]: R
+    B: {write: x, L: to_begin}
+    x: R
+    ' ': {R: regect}
+
+  find_C:
+    [ a, b, c, A, B]: R
+    C: {write: x, L: to_begin}
+    x: R
+    ' ': {R: regect}
+  to_begin:
+    [ a, b, c, A, B, C, x]: L
+    ' ': {R: take_sem}
+  accept:
+
+  regect:
